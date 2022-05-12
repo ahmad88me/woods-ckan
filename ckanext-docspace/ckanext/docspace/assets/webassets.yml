@@ -1,0 +1,14 @@
+# docspace-js:
+#   filter: rjsmin
+#   output: ckanext-docspace/%(version)s-docspace.js
+#   contents:
+#     - js/docspace.js
+#   extra:
+#     preload:
+#       - base/main
+
+# docspace-css:
+#   filter: cssrewrite
+#   output: ckanext-docspace/%(version)s-docspace.css
+#   contents:
+#     - css/docspace.css
