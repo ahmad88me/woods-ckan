@@ -1,6 +1,13 @@
 # woods-ckan
 
 
+## Create Extension
+1. Setup CKAN
+2. Activate the environment `. /usr/lib/ckan/default/bin/activate`.
+3. Go to src folder `cd /usr/lib/ckan/default/src/`.
+4. Create extension `ckan generate extension`. (Note: `cookiecutter` method does not work for ckan version 2.9).
+
+
 ## Known Issues
 * When running: `sudo supervisorctl reload`
 
@@ -16,5 +23,7 @@ sudo service supervisor start
 ```
 sudo service redis restart
 ```
+
+
 
  
