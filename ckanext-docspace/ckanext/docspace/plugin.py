@@ -5,6 +5,7 @@ import ckan.plugins.toolkit as toolkit
 class DocspacePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IResourceView, inherit=True)
+    plugins.implements(plugins.interfaces.IDatasetForm, inherit=True)
 
     # IConfigurer
     def update_config(self, config_):
@@ -28,3 +29,6 @@ class DocspacePlugin(plugins.SingletonPlugin):
     def form_template(self, context, data_dict):
         return 'button.html'
 
+    # IDatasetForm
+    def resource_template(self, package_type):
+        return 'button.html'
