@@ -28,6 +28,11 @@
           {% block resource_actions %}
           <ul>
             {% block resource_actions_inner %}
+              {%if res.docspace_token %}
+                  <li class="btn btn-default">Has token {{res.docspace_token}}</li>
+              {%else%}
+                  <li class="btn btn-default">No Token </li>
+              {%endif%}
 	    <li class="btn btn-default">DocSpace </li>
             {% if h.check_access('package_update', {'id':pkg.id }) and not is_activity_archive %}
               <li>{% link_for _('Manage'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
