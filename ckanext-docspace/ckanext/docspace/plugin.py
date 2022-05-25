@@ -31,4 +31,4 @@ class DocspacePlugin(plugins.SingletonPlugin):
 
     # IDatasetForm
     def resource_template(self, package_type):
-        return 'button.html'
+        return '/package/resource_read.html'
