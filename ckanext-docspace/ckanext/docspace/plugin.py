@@ -13,6 +13,25 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def update_config(self, config_):
         toolkit.add_template_directory(config_, 'templates')
 
+    def create_package_schema(self):
+        # let's grab the default schema in our plugin
+        schema = super(DocspacePlugin, self).create_package_schema()
+        # our custom field
+        schema.update({
+            'custom_text': [toolkit.get_validator('ignore_missing'),
+                            toolkit.get_converter('convert_to_extras')]
+        })
+        return schema
+
+    def update_package_schema(self):
+        schema = super(DocspacePlugin, self).update_package_schema()
+        # our custom field
+        schema.update({
+            'custom_text': [toolkit.get_validator('ignore_missing'),
+                            toolkit.get_converter('convert_to_extras')]
+        })
+        return schema
+
     def _modify_package_schema(self, schema):
         # Add our custom country_code metadata field to the schema.
         schema.update({
@@ -55,6 +74,16 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 'custom_resource_text': [toolkit.get_validator('ignore_missing') ]
             })
         return schema
+
+    def is_fallback(self):
+        # Return True to register this plugin as the default handler for
+        # package types not handled by any other IDatasetForm plugin.
+        return True
+
+    def package_types(self):
+        # This plugin doesn't handle any special package types, it just
+        # registers itself as the default (above).
+        return []
 
     # # IResourceView
     # def info(self):
