@@ -40,10 +40,10 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         # })
         # Add our custom_test metadata field to the schema, this one will use
         # convert_to_extras instead of convert_to_tags.
-        # schema.update({
-        #     'docspace_viewid': [toolkit.get_validator('ignore_missing'),
-        #                     toolkit.get_converter('convert_to_extras')]
-        # })
+        schema.update({
+            'docspace_viewid': [toolkit.get_validator('ignore_missing'),
+                            toolkit.get_converter('convert_to_extras')]
+        })
         # Add our custom_resource_text metadata field to the schema
         schema['resources'].update({
             'docspace_viewid': [toolkit.get_validator('ignore_missing')]
@@ -65,10 +65,10 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         #     })
 
         # # Add our custom_text field to the dataset schema.
-        # schema.update({
-        #     'custom_text': [toolkit.get_converter('convert_from_extras'),
-        #         toolkit.get_validator('ignore_missing')]
-        #     })
+        schema.update({
+            'docspace_viewid': [toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')]
+            })
 
         schema['resources'].update({
                 'docspace_viewid': [toolkit.get_validator('ignore_missing')]
