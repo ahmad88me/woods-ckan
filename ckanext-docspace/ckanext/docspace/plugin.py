@@ -125,7 +125,8 @@ def get_table_content():
 
 def add_update_docspace(context, data_dict):
     sss = SSSAPIS(username="aalobaid@fi.upm.es", password="JxD7Z7>r!b!U/RJ")
-    # if data_dict['docspace_viewid'].strip() == "":
+    if data_dict['docspace_viewid'].strip() == "":
+        pass
     #     # create
     #     table = get_table_content()
     #     sss.create_private_view(table=table)
