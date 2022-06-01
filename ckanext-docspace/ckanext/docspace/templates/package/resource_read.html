@@ -11,7 +11,7 @@
         type: "POST",
         url: "https://woods.linkeddata.es/api/3/action/docspace_update",
         data: data,
-        success: function(){console.log('success');alert("success");}
+        success: function(data,textStatus,jqXHR ){console.log('success');alert("success"); console.log(data)}
         //dataType: dataType
       });
     });
