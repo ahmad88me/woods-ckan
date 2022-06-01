@@ -93,7 +93,8 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         return []
 
     def get_actions(self):
-        actions = super(DocspacePlugin, self).get_actions()
+        #actions = super(DocspacePlugin, self).get_actions()
+        actions = dict()
         actions['docspace_update'] = add_update_docspace
         return actions
 
