@@ -7,7 +7,9 @@
     $("#docspace").click(function(){
       console.log('clicked');
 
-      var data = {'docspace_viewid': "{%if res.docspace_viewid%}{{res.docspace_viewid}}{%endif%}" }
+      var data1 = {'docspace_viewid': "{%if res.docspace_viewid%}{{res.docspace_viewid}}{%endif%}" }
+      var data = {"id": "abc"}
+
       $.ajax({
         type: "POST",
         url: "https://woods.linkeddata.es/api/3/action/docspace_update",
