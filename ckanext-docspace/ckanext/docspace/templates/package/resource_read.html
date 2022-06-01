@@ -30,13 +30,14 @@
             {% block resource_actions_inner %}
               <script>
                 $("#docspace").click(function(){
+                  console.log('clicked');
                   var data = {}
                   $.ajax({
                     type: "POST",
                     url: "https://woods.linkeddata.es/api/3/action/docspace_update",
                     data: data,
-                    success: success,
-                    dataType: dataType
+                    success: function(){console.log('success');alert("success");}
+                    //dataType: dataType
                   });
                 });
 
