@@ -128,7 +128,7 @@ def add_update_docspace(context, data_dict):
     if data_dict['docspace_viewid'].strip() == "":
         # create
         table = get_table_content()
-    #     sss.create_private_view(table=table)
+        sss.create_private_view(table=table)
     # else:
     #     # update
     #     table = get_table_content()
