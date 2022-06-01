@@ -1,11 +1,18 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+import os
+from datetime import datetime
+
+
+BASE_URL = "https://woods.linkeddata.es/api/3/action/"
+if 'docspace_api' in os.environ:
+    BASE_URL = os.environ['docspace_api']
 
 
 class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IDatasetForm)  # To add docspace field to the resources
-
+    plugins.implements(plugins.IActions)  # To add a custom API
     # plugins.implements(plugins.IResourceView, inherit=True)
     # plugins.implements(plugins.interfaces.IDatasetForm, inherit=True)
 
@@ -85,6 +92,11 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         # registers itself as the default (above).
         return []
 
+    def get_actions(self):
+        actions = super(DocspacePlugin, self).get_actions()
+        actions['docspace_update'] = add_update_docspace
+        return actions
+
     # # IResourceView
     # def info(self):
     #     return {'preview_enabled': True, 'name': 'the button', 'title': 'The Buttonn'}
@@ -104,3 +116,13 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     # # IDatasetForm
     # def resource_template(self, package_type):
     #     return '/package/resource_read.html'
+
+
+def add_update_docspace(context, data_dict):
+    with open("/home/woods/docspace_logtest", 'w') as f:
+        f.write(str(datetime.now()))
+        f.write('\n')
+
+
+
+
