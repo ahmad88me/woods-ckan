@@ -120,9 +120,11 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
 
 def add_update_docspace(context, data_dict):
-    with open("/home/woods/docspace_logtest", 'w') as f:
-        f.write(str(datetime.now()))
-        f.write('\n')
+    print(str(context))
+    print(str(data_dict))
+    # with open("/home/woods/docspace_logtest", 'w') as f:
+    #     f.write(str(datetime.now()))
+    #     f.write('\n')
 
 
 
