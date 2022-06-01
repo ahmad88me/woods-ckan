@@ -125,7 +125,7 @@ def get_table_content():
 
 def add_update_docspace(context, data_dict):
     return {
-        "context": str(context),
+        # "context": str(context),
         "data_dict": str(data_dict)
     }
 
