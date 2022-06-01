@@ -8,7 +8,7 @@
       console.log('clicked');
 
       var data1 = {'docspace_viewid': "{%if res.docspace_viewid%}{{res.docspace_viewid}}{%endif%}" }
-      var data = {"id": "abc"}
+      var data = {"docspace_viewid": "abc"}
 
       $.ajax({
         type: "POST",
