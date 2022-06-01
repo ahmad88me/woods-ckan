@@ -2,6 +2,9 @@
 
 {% block resource_actions_inner %}
   <script>
+  window.onload = function() {
+console.log("Window is loaded");
+
     $("#docspace").click(function(){
       console.log('clicked');
       var data = {}
@@ -13,6 +16,9 @@
         //dataType: dataType
       });
     });
+
+}
+
   </script>
 
   {%if res.docspace_token %}
