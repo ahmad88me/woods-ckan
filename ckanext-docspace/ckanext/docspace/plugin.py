@@ -119,8 +119,8 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     #     return '/package/resource_read.html'
 
 
-def get_table_content():
-    return [["A", "B", "C"]]
+# def get_table_content():
+#     return [["A", "B", "C"]]
 
 
 def add_update_docspace(context, data_dict):
