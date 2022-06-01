@@ -1,8 +1,8 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import os
-from datetime import datetime
-
+from spreadsheetspace.sssapis import SSSAPIS
+import ckan
 
 BASE_URL = "https://woods.linkeddata.es/api/3/action/"
 if 'docspace_api' in os.environ:
@@ -119,9 +119,22 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     #     return '/package/resource_read.html'
 
 
+def get_table_content():
+    return [["A", "B", "C"]]
+
+
 def add_update_docspace(context, data_dict):
-    print(str(context))
-    print(str(data_dict))
+    sss = SSSAPIS(username="aalobaid@fi.upm.es", password="JxD7Z7>r!b!U/RJ")
+    if data_dict['docspace_viewid'].strip() == "":
+        # create
+        table = get_table_content()
+        sss.create_private_view(table=table)
+        #
+    else:
+        # update
+        table = get_table_content()
+        sss.update_view(view_id=data_dict['docspace_viewid'], table=table)
+        # ckan.logic.action.update.resource_update(context, {'docspace_viewid'})
     return {
         "context": str(context),
         "data_dict": str(data_dict)
