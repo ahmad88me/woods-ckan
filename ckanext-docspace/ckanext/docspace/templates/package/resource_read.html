@@ -6,7 +6,7 @@
   console.log("Window is loaded");
     $("#docspace").click(function(){
       console.log('clicked');
-      var data = {'id': {{pkg.id}} }
+      var data = {'id': "{{pkg.id}}" }
       $.ajax({
         type: "POST",
         url: "https://woods.linkeddata.es/api/3/action/docspace_update",
