@@ -3,11 +3,10 @@
 {% block resource_actions_inner %}
   <script>
   window.onload = function() {
-console.log("Window is loaded");
-
+  console.log("Window is loaded");
     $("#docspace").click(function(){
       console.log('clicked');
-      var data = {}
+      var data = {'id': {{pkg.id}} }
       $.ajax({
         type: "POST",
         url: "https://woods.linkeddata.es/api/3/action/docspace_update",

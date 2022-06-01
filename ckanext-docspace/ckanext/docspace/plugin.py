@@ -95,7 +95,7 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def get_actions(self):
         #actions = super(DocspacePlugin, self).get_actions()
         actions = dict()
-        actions['docspace_update'] = add_update_docspace
+        actions[u'docspace_update'] = add_update_docspace
         return actions
 
     # # IResourceView
@@ -120,9 +120,10 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
 
 def add_update_docspace(context, data_dict):
-    with open("/home/woods/docspace_logtest", 'w') as f:
-        f.write(str(datetime.now()))
-        f.write('\n')
+    pass
+    # with open("/home/woods/docspace_logtest", 'w') as f:
+    #     f.write(str(datetime.now()))
+    #     f.write('\n')
 
 
 
