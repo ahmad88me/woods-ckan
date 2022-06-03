@@ -4,4 +4,8 @@
 {{ super() }}
 
   {{ form.input('docspace_viewid', label=_('DocSpace View ID'), id='field-docspace_viewid', placeholder=_('Enter the View ID'), value=data.docspace_viewid, error=errors.docspace_viewid, classes=['control-medium']) }}
+
+  {{ form.input('docspace_token', label=_('DocSpace Token'), id='field-docspace_token', placeholder=_('Enter the token for your DocSpace account'), value=data.docspace_token, error=errors.docspace_token, classes=['control-medium']) }}
+
+
 {% endblock %}

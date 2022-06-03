@@ -35,6 +35,12 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         #     'docspace_viewid': [toolkit.get_validator('ignore_missing'),
         #                     toolkit.get_converter('convert_to_extras')]
         # })
+        #
+        # schema.update({
+        #     'docspace_token': [toolkit.get_validator('ignore_missing'),
+        #                     toolkit.get_converter('convert_to_extras')]
+        # })
+        #
         return schema
 
     def update_package_schema(self):
@@ -139,27 +145,27 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     # def resource_template(self, package_type):
     #     return '/package/resource_read.html'
 
-
-def f(context, data_dict):
-    sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
-    print("To load the data")
-    # rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
-    rsc = {u'id': data_dict['res_id']}
-    upload = get_resource_uploader(rsc)
-    filepath = upload.get_path(rsc[u'id'])
-    # resource = {
-    #     'id': data_dict['res_id'],
-    #     'url': data_dict['url'],
-    #     'upload': True
-    # }
-    # ResourceUpload(resource)
-    # filepath =
-    print("file_path: %s" % filepath)
-    table = table_to_content(filepath)
-    # table = table_to_content(data_dict['url'])
-    print("table is loaded")
-    sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
-    print("sending the data")
+#
+# def f(context, data_dict):
+#     sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
+#     print("To load the data")
+#     # rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
+#     rsc = {u'id': data_dict['res_id']}
+#     upload = get_resource_uploader(rsc)
+#     filepath = upload.get_path(rsc[u'id'])
+#     # resource = {
+#     #     'id': data_dict['res_id'],
+#     #     'url': data_dict['url'],
+#     #     'upload': True
+#     # }
+#     # ResourceUpload(resource)
+#     # filepath =
+#     print("file_path: %s" % filepath)
+#     table = table_to_content(filepath)
+#     # table = table_to_content(data_dict['url'])
+#     print("table is loaded")
+#     sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
+#     print("sending the data")
 
 
 def add_update_docspace(context, data_dict):
