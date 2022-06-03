@@ -7,11 +7,10 @@
     $("#docspace").click(function(){
       console.log('clicked');
 
-      var data1 = {'docspace_viewid': "{%if res.docspace_viewid%}{{res.docspace_viewid}}{%endif%}" }
       {%if res.docspace_viewid%}
       var data = {"docspace_viewid": "{{res.docspace_viewid}}"}
       {%else%}
-      var data = {"docspace_viewid": " "}
+      var data = {"docspace_viewid": " ", "url": "{{res.url}}"}
       {%endif%}
       $.ajax({
         type: "POST",
@@ -29,7 +28,7 @@
   {%if res.docspace_token %}
       <li class="btn btn-default">Has token {{res.docspace_token}}</li>
   {%else%}
-      <li class="btn btn-default">No Token </li>
+      <li class="btn btn-default">No Token {{res.url}} </li>
   {%endif%}
   {%if res.docspace_viewid %}
     <li class="btn btn-default">ViewID: {{res.docspace_viewid}}</li>
