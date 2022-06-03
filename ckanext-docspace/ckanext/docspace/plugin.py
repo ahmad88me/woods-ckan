@@ -9,7 +9,8 @@ import ckan
 from ckan.config.environment import CONFIG_FROM_ENV_VARS, config
 # import pandas as pd
 from multiprocessing import Process
-
+from ckan.lib.uploader import get_uploader
+from ckan.logic import get_action
 # BASE_URL = "https://woods.linkeddata.es/api/3/action/"
 # if 'docspace_api' in os.environ:
 #     BASE_URL = os.environ['docspace_api']
@@ -139,10 +140,15 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     #     return '/package/resource_read.html'
 
 
-def f(data_dict):
+def f(context, data_dict):
     sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
     print("To load the data")
-    table = table_to_content(data_dict['url'])
+    rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
+    upload = get_uploader(rsc)
+    filepath = upload.get_path(rsc[u'id'])
+    print("file_path: %s" % filepath)
+    table = table_to_content(filepath)
+    # table = table_to_content(data_dict['url'])
     print("table is loaded")
     sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
     print("sending the data")
@@ -154,7 +160,7 @@ def add_update_docspace(context, data_dict):
         print("ABC ... ")
         if data_dict['docspace_viewid'].strip() == "":
             # create
-            p = Process(target=f, args=(data_dict,))
+            p = Process(target=f, args=(context, data_dict,))
             p.start()
             p.join()
             # table = table_to_content(data_dict['url'])
