@@ -141,6 +141,7 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
 def add_update_docspace(context, data_dict):
     sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
+    print("ABC ... ")
     if data_dict['docspace_viewid'].strip() == "":
         # create
         table = table_to_content(data_dict['url'])
