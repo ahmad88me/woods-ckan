@@ -6,6 +6,7 @@ import os
 from spreadsheetspace.sssapis import SSSAPIS
 from spreadsheetspace import table_to_content
 import ckan
+from ckan.config.environment import CONFIG_FROM_ENV_VARS
 # import pandas as pd
 
 # BASE_URL = "https://woods.linkeddata.es/api/3/action/"
@@ -162,13 +163,17 @@ def add_update_docspace(context, data_dict):
     try:
         sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
         print("ABC ... ")
+        print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
         print(str(data_dict))
-        data_dict['url'] = data_dict['url'].replace("https://woods.linkeddata.es/","http://localhost:3000")
+        url = data_dict['url'].replace("https://").replace("http://")
+        domain_end = url.find("/")
+        data_dict['url'] = url[domain_end+1:]
+        print("new url: %s" % data_dict['url'])
+        #.replace("https://woods.linkeddata.es/", "http://localhost:3000")
         if data_dict['docspace_viewid'].strip() == "":
             # create
             table = table_to_content(data_dict['url'])
-            # sss.create_private_view(table=table, description="Uploaded from CKAN",
-            #                         recipients=["aalobaid@fi.upm.es"])
+            sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
         else:
             # update
             table = table_to_content(data_dict['url'])
