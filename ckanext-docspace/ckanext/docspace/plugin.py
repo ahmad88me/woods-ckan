@@ -1,3 +1,5 @@
+import traceback
+
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import os
@@ -140,18 +142,23 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
 
 def add_update_docspace(context, data_dict):
-    sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
-    print("ABC ... ")
-    if data_dict['docspace_viewid'].strip() == "":
-        # create
-        table = table_to_content(data_dict['url'])
-        # sss.create_private_view(table=table, description="Uploaded from CKAN",
-        #                         recipients=["aalobaid@fi.upm.es"])
-    else:
-        # update
-        table = table_to_content(data_dict['url'])
-        sss.update_view(view_id=data_dict['docspace_viewid'], table=table)
-        # ckan.logic.action.update.resource_update(context, {'docspace_viewid'})
+    try:
+        sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
+        print("ABC ... ")
+        if data_dict['docspace_viewid'].strip() == "":
+            # create
+            table = table_to_content(data_dict['url'])
+            # sss.create_private_view(table=table, description="Uploaded from CKAN",
+            #                         recipients=["aalobaid@fi.upm.es"])
+        else:
+            # update
+            table = table_to_content(data_dict['url'])
+            sss.update_view(view_id=data_dict['docspace_viewid'], table=table)
+            # ckan.logic.action.update.resource_update(context, {'docspace_viewid'})
+    except Exception as e:
+        print("Exception")
+        print(str(e))
+        traceback.print_exc()
     return {
         "context": str(context),
         "data_dict": str(data_dict)
