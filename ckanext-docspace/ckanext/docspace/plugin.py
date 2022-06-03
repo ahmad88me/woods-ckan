@@ -147,7 +147,8 @@ def add_update_docspace(context, data_dict):
         print("ABC ... ")
         if data_dict['docspace_viewid'].strip() == "":
             # create
-            table = table_to_content(data_dict['url'])
+            pass
+            # table = table_to_content(data_dict['url'])
             # sss.create_private_view(table=table, description="Uploaded from CKAN",
             #                         recipients=["aalobaid@fi.upm.es"])
         else:
