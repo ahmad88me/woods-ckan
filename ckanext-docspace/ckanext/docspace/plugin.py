@@ -4,9 +4,9 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import os
 from spreadsheetspace.sssapis import SSSAPIS
-# from spreadsheetspace import table_to_content
+from spreadsheetspace import table_to_content
 import ckan
-import pandas as pd
+# import pandas as pd
 
 # BASE_URL = "https://woods.linkeddata.es/api/3/action/"
 # if 'docspace_api' in os.environ:
@@ -142,21 +142,20 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 #     return [["A", "B", "C"]]
 
 
-def table_to_content(table_url):
-    print(table_url)
-    df = pd.read_csv(table_url)
-    print("data is loaded into pandas")
-    content = []
-    header = df.columns
-    for idx, row in df.iterrows():
-        r = []
-        for h in header:
-            r.append(row[h])
-        content.append(r)
-    print("content is returned")
-    print(content)
-    return content
-
+# def table_to_content(table_url):
+#     print(table_url)
+#     df = pd.read_csv(table_url)
+#     print("data is loaded into pandas")
+#     content = []
+#     header = df.columns
+#     for idx, row in df.iterrows():
+#         r = []
+#         for h in header:
+#             r.append(row[h])
+#         content.append(r)
+#     print("content is returned")
+#     print(content)
+#     return content
 
 
 def add_update_docspace(context, data_dict):
@@ -164,6 +163,7 @@ def add_update_docspace(context, data_dict):
         sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
         print("ABC ... ")
         print(str(data_dict))
+        data_dict['url'] = data_dict['url'].replace("https://woods.linkeddata.es/","http://localhost:3000")
         if data_dict['docspace_viewid'].strip() == "":
             # create
             table = table_to_content(data_dict['url'])
