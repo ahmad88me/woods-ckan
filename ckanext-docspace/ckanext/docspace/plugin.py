@@ -8,6 +8,7 @@ from spreadsheetspace import table_to_content
 import ckan
 from ckan.config.environment import CONFIG_FROM_ENV_VARS, config
 # import pandas as pd
+from multiprocessing import Process
 
 # BASE_URL = "https://woods.linkeddata.es/api/3/action/"
 # if 'docspace_api' in os.environ:
@@ -138,6 +139,103 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     #     return '/package/resource_read.html'
 
 
+def f(data_dict):
+    sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
+    print("To load the data")
+    table = table_to_content(data_dict['url'])
+    print("table is loaded")
+    sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
+    print("sending the data")
+
+
+def add_update_docspace(context, data_dict):
+    try:
+        sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
+        print("ABC ... ")
+        if data_dict['docspace_viewid'].strip() == "":
+            # create
+            p = Process(target=f, args=(data_dict,))
+            p.start()
+            p.join()
+            # table = table_to_content(data_dict['url'])
+            # sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
+        else:
+            # update
+            table = table_to_content(data_dict['url'])
+            sss.update_view(view_id=data_dict['docspace_viewid'], table=table)
+            # ckan.logic.action.update.resource_update(context, {'docspace_viewid'})
+    except Exception as e:
+        print("Exception")
+        print(str(e))
+        traceback.print_exc()
+    return {
+        "context": str(context),
+        "data_dict": str(data_dict)
+    }
+    # with open("/home/woods/docspace_logtest", 'w') as f:
+    #     f.write(str(datetime.now()))
+    #     f.write('\n')
+
+
+
+
+
+
+
+# def add_update_docspace(context, data_dict):
+#     try:
+#         sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
+#         print("ABC ... ")
+#         domain_url = config['ckan.site_url']
+#         storage_path = config['ckan.storage_path']
+#         if domain_url[-1] != '/':
+#             domain_url += '/'
+#         local_host = "http://127.0.0.1:3000/"
+#         # print(os.environ['CKAN_CONFIG'])
+#         # print(str(config))
+#         # print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
+#         # for k in os.environ:
+#         #     print(k)
+#         #     if 'site_url' in k.lower():
+#         #         print("====================\n\n")
+#         # print(os.environ['CKAN_SITE_URL'])
+#         print(str(data_dict))
+#         url_without_protocol = data_dict['url'].replace("https://", "").replace("http://", "")
+#         domain_end = url_without_protocol.find("/")
+#         new_url = data_dict['url']
+#         if data_dict['url'].startswith(domain_url):
+#             new_url = local_host+url_without_protocol[domain_end+1:]
+#         print("new url: %s" % new_url)
+#         #.replace("https://woods.linkeddata.es/", "http://localhost:3000")
+#         if data_dict['docspace_viewid'].strip() == "":
+#             # create
+#             table = table_to_content(new_url)
+#             sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
+#         else:
+#             # update
+#             table = table_to_content(new_url)
+#             sss.update_view(view_id=data_dict['docspace_viewid'], table=table)
+#             # ckan.logic.action.update.resource_update(context, {'docspace_viewid'})
+#     except Exception as e:
+#         print("Exception")
+#         print(str(e))
+#         traceback.print_exc()
+#     return {
+#         "context": str(context),
+#         "data_dict": str(data_dict)
+#     }
+#     # with open("/home/woods/docspace_logtest", 'w') as f:
+#     #     f.write(str(datetime.now()))
+#     #     f.write('\n')
+#
+#
+#
+
+
+
+
+
+
 # def get_table_content(url):
 #     pd.read_csv()
 #     return [["A", "B", "C"]]
@@ -159,50 +257,51 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 #     return content
 
 
-def add_update_docspace(context, data_dict):
-    try:
-        sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
-        print("ABC ... ")
-        domain_url = config['ckan.site_url']
-        if domain_url[-1] != '/':
-            domain_url += '/'
-        local_host = "http://127.0.0.1:3000/"
-        # print(os.environ['CKAN_CONFIG'])
-        # print(str(config))
-        # print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
-        # for k in os.environ:
-        #     print(k)
-        #     if 'site_url' in k.lower():
-        #         print("====================\n\n")
-        # print(os.environ['CKAN_SITE_URL'])
-        print(str(data_dict))
-        url_without_protocol = data_dict['url'].replace("https://", "").replace("http://", "")
-        domain_end = url_without_protocol.find("/")
-        new_url = data_dict['url']
-        if data_dict['url'].startswith(domain_url):
-            new_url = local_host+url_without_protocol[domain_end+1:]
-        print("new url: %s" % new_url)
-        #.replace("https://woods.linkeddata.es/", "http://localhost:3000")
-        if data_dict['docspace_viewid'].strip() == "":
-            # create
-            table = table_to_content(new_url)
-            sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
-        else:
-            # update
-            table = table_to_content(new_url)
-            sss.update_view(view_id=data_dict['docspace_viewid'], table=table)
-            # ckan.logic.action.update.resource_update(context, {'docspace_viewid'})
-    except Exception as e:
-        print("Exception")
-        print(str(e))
-        traceback.print_exc()
-    return {
-        "context": str(context),
-        "data_dict": str(data_dict)
-    }
-    # with open("/home/woods/docspace_logtest", 'w') as f:
-    #     f.write(str(datetime.now()))
-    #     f.write('\n')
+# def add_update_docspace(context, data_dict):
+#     try:
+#         sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
+#         print("ABC ... ")
+#         domain_url = config['ckan.site_url']
+#         path = config['ckan.storage_path']
+#         if domain_url[-1] != '/':
+#             domain_url += '/'
+#         local_host = "http://127.0.0.1:3000/"
+#         # print(os.environ['CKAN_CONFIG'])
+#         # print(str(config))
+#         # print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
+#         # for k in os.environ:
+#         #     print(k)
+#         #     if 'site_url' in k.lower():
+#         #         print("====================\n\n")
+#         # print(os.environ['CKAN_SITE_URL'])
+#         print(str(data_dict))
+#         url_without_protocol = data_dict['url'].replace("https://", "").replace("http://", "")
+#         domain_end = url_without_protocol.find("/")
+#         new_url = data_dict['url']
+#         if data_dict['url'].startswith(domain_url):
+#             new_url = local_host+url_without_protocol[domain_end+1:]
+#         print("new url: %s" % new_url)
+#         #.replace("https://woods.linkeddata.es/", "http://localhost:3000")
+#         if data_dict['docspace_viewid'].strip() == "":
+#             # create
+#             table = table_to_content(new_url)
+#             sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
+#         else:
+#             # update
+#             table = table_to_content(new_url)
+#             sss.update_view(view_id=data_dict['docspace_viewid'], table=table)
+#             # ckan.logic.action.update.resource_update(context, {'docspace_viewid'})
+#     except Exception as e:
+#         print("Exception")
+#         print(str(e))
+#         traceback.print_exc()
+#     return {
+#         "context": str(context),
+#         "data_dict": str(data_dict)
+#     }
+#     # with open("/home/woods/docspace_logtest", 'w') as f:
+#     #     f.write(str(datetime.now()))
+#     #     f.write('\n')
 
 
 
