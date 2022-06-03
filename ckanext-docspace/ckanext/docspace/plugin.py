@@ -4,8 +4,9 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import os
 from spreadsheetspace.sssapis import SSSAPIS
-from spreadsheetspace import table_to_content
+# from spreadsheetspace import table_to_content
 import ckan
+import pandas as pd
 
 # BASE_URL = "https://woods.linkeddata.es/api/3/action/"
 # if 'docspace_api' in os.environ:
@@ -139,6 +140,23 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 # def get_table_content(url):
 #     pd.read_csv()
 #     return [["A", "B", "C"]]
+
+
+def table_to_content(table_url):
+    print(table_url)
+    df = pd.read_csv(table_url)
+    print("data is loaded into pandas")
+    content = []
+    header = df.columns
+    for idx, row in df.iterrows():
+        r = []
+        for h in header:
+            r.append(row[h])
+        content.append(r)
+    print("content is returned")
+    print(content)
+    return content
+
 
 
 def add_update_docspace(context, data_dict):
