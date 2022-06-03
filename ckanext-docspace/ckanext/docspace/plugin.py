@@ -164,6 +164,7 @@ def add_update_docspace(context, data_dict):
         sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
         print("ABC ... ")
         print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
+        print(os.environ['CKAN_SITE_URL'])
         print(str(data_dict))
         url = data_dict['url'].replace("https://", "").replace("http://", "")
         domain_end = url.find("/")
