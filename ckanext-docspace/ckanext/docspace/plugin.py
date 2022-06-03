@@ -176,19 +176,20 @@ def add_update_docspace(context, data_dict):
         #         print("====================\n\n")
         # print(os.environ['CKAN_SITE_URL'])
         print(str(data_dict))
-        url = data_dict['url'].replace("https://", "").replace("http://", "")
-        domain_end = url.find("/")
+        url_without_protocol = data_dict['url'].replace("https://", "").replace("http://", "")
+        domain_end = url_without_protocol.find("/")
+        new_url = data_dict['url']
         if data_dict['url'].startswith(domain_url):
-            data_dict['url'] = local_host+url[domain_end+1:]
-        print("new url: %s" % data_dict['url'])
+            new_url = local_host+url_without_protocol[domain_end+1:]
+        print("new url: %s" % new_url)
         #.replace("https://woods.linkeddata.es/", "http://localhost:3000")
         if data_dict['docspace_viewid'].strip() == "":
             # create
-            table = table_to_content(data_dict['url'])
+            table = table_to_content(new_url)
             sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
         else:
             # update
-            table = table_to_content(data_dict['url'])
+            table = table_to_content(new_url)
             sss.update_view(view_id=data_dict['docspace_viewid'], table=table)
             # ckan.logic.action.update.resource_update(context, {'docspace_viewid'})
     except Exception as e:
