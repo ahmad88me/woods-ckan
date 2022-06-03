@@ -163,6 +163,7 @@ def add_update_docspace(context, data_dict):
     try:
         sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
         print("ABC ... ")
+        domain_url = ckan.site_url
         print(os.environ['CKAN_CONFIG'])
         print(str(config))
         # print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
@@ -174,7 +175,7 @@ def add_update_docspace(context, data_dict):
         print(str(data_dict))
         url = data_dict['url'].replace("https://", "").replace("http://", "")
         domain_end = url.find("/")
-        data_dict['url'] = CONFIG_FROM_ENV_VARS['ckan.site_url']+url[domain_end+1:]
+        data_dict['url'] = domain_url+url[domain_end+1:]
         print("new url: %s" % data_dict['url'])
         #.replace("https://woods.linkeddata.es/", "http://localhost:3000")
         if data_dict['docspace_viewid'].strip() == "":
