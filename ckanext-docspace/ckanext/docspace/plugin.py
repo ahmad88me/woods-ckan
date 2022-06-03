@@ -174,6 +174,7 @@ def add_update_docspace(context, data_dict):
         print("ABC ... ")
         if data_dict['docspace_viewid'].strip() == "":
             # create
+            print("docspace_token: <%s>" % data_dict['docspace_token'])
             sss = SSSAPIS(token=data_dict['docspace_token'])
             # sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
             # print("To load the data")
