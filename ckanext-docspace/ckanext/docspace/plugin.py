@@ -166,6 +166,7 @@ def add_update_docspace(context, data_dict):
         domain_url = config['ckan.site_url']
         if domain_url[-1] != '/':
             domain_url += '/'
+        local_host = "http://127.0.0.1:3000/"
         # print(os.environ['CKAN_CONFIG'])
         # print(str(config))
         # print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
@@ -177,7 +178,8 @@ def add_update_docspace(context, data_dict):
         print(str(data_dict))
         url = data_dict['url'].replace("https://", "").replace("http://", "")
         domain_end = url.find("/")
-        data_dict['url'] = domain_url+url[domain_end+1:]
+        if data_dict['url'].startswith(domain_url):
+            data_dict['url'] = local_host+url[domain_end+1:]
         print("new url: %s" % data_dict['url'])
         #.replace("https://woods.linkeddata.es/", "http://localhost:3000")
         if data_dict['docspace_viewid'].strip() == "":
