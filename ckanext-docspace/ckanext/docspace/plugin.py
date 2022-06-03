@@ -6,7 +6,7 @@ import os
 from spreadsheetspace.sssapis import SSSAPIS
 from spreadsheetspace import table_to_content
 import ckan
-from ckan.config.environment import CONFIG_FROM_ENV_VARS
+from ckan.config.environment import CONFIG_FROM_ENV_VARS, config
 # import pandas as pd
 
 # BASE_URL = "https://woods.linkeddata.es/api/3/action/"
@@ -164,6 +164,7 @@ def add_update_docspace(context, data_dict):
         sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
         print("ABC ... ")
         print(os.environ['CKAN_CONFIG'])
+        print(str(config))
         # print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
         # for k in os.environ:
         #     print(k)
