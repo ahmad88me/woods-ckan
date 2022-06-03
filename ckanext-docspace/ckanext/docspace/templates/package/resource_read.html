@@ -10,7 +10,7 @@
       {%if res.docspace_viewid%}
       var data = {"docspace_viewid": "{{res.docspace_viewid}}"}
       {%else%}
-      var data = {"docspace_viewid": " ", "url": "{{res.url}}", "res_id": "{{res.id}}", "docspace_token": "{{docspace_token}}"}
+      var data = {"docspace_viewid": " ", "url": "{{res.url}}", "res_id": "{{res.id}}", "docspace_token": "{{res.docspace_token}}"}
       {%endif%}
       $.ajax({
         type: "POST",
