@@ -165,7 +165,7 @@ def add_update_docspace(context, data_dict):
         print("ABC ... ")
         print(CONFIG_FROM_ENV_VARS['ckan.site_url'])
         print(str(data_dict))
-        url = data_dict['url'].replace("https://").replace("http://")
+        url = data_dict['url'].replace("https://", "").replace("http://", "")
         domain_end = url.find("/")
         data_dict['url'] = url[domain_end+1:]
         print("new url: %s" % data_dict['url'])
