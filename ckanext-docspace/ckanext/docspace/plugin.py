@@ -143,8 +143,8 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 def f(context, data_dict):
     sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
     print("To load the data")
-    rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
-    # rsc = {'id'}
+    # rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
+    rsc = {u'id': data_dict['res_id']}
     upload = get_resource_uploader(rsc)
     filepath = upload.get_path(rsc[u'id'])
     print("file_path: %s" % filepath)
