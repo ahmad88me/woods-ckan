@@ -143,7 +143,7 @@ class DocspacePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 def f(context, data_dict):
     sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
     print("To load the data")
-    rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
+    # rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
     rsc = {u'id': data_dict['res_id']}
     upload = get_resource_uploader(rsc)
     filepath = upload.get_path(rsc[u'id'])
@@ -168,9 +168,30 @@ def add_update_docspace(context, data_dict):
         print("ABC ... ")
         if data_dict['docspace_viewid'].strip() == "":
             # create
-            p = Process(target=f, args=(context, data_dict,))
-            p.start()
-            p.join()
+            sss = SSSAPIS(token=data_dict['docspace_token'])
+            # sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
+            # print("To load the data")
+            # rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
+            rsc = {u'id': data_dict['res_id']}
+            upload = get_resource_uploader(rsc)
+            filepath = upload.get_path(rsc[u'id'])
+            # resource = {
+            #     'id': data_dict['res_id'],
+            #     'url': data_dict['url'],
+            #     'upload': True
+            # }
+            # ResourceUpload(resource)
+            # filepath =
+            print("file_path: %s" % filepath)
+            table = table_to_content(filepath)
+            # table = table_to_content(data_dict['url'])
+            print("table is loaded")
+            sss.create_private_view(table=table, description="Uploaded from CKAN")
+            # sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
+            print("sending the data")
+            # p = Process(target=f, args=(context, data_dict,))
+            # p.start()
+            # p.join()
             # table = table_to_content(data_dict['url'])
             # sss.create_private_view(table=table, description="Uploaded from CKAN", recipients=["aalobaid@fi.upm.es"])
         else:

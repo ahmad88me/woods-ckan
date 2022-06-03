@@ -26,14 +26,15 @@
   </script>
 
   {%if res.docspace_token %}
-      <li class="btn btn-default">Has token {{res.docspace_token}}</li>
+<!--      <li class="btn btn-default">Has token {{res.docspace_token}}</li>-->
+      <li id="docspace" class="btn btn-default">DocSpace</li>
   {%else%}
       <li class="btn btn-default">No Token</li>
   {%endif%}
   {%if res.docspace_viewid %}
     <li class="btn btn-default">ViewID: {{res.docspace_viewid}}</li>
   {%endif%}
-<li id="docspace" class="btn btn-default">DocSpace 1</li>
+
 {% if h.check_access('package_update', {'id':pkg.id }) and not is_activity_archive %}
   <li>{% link_for _('Manage'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
 {% endif %}
