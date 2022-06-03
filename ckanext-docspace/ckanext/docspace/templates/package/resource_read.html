@@ -10,7 +10,7 @@
       {%if res.docspace_viewid%}
       var data = {"docspace_viewid": "{{res.docspace_viewid}}"}
       {%else%}
-      var data = {"docspace_viewid": " ", "url": "{{res.url}}", "res_id": "{{res.id}}"}
+      var data = {"docspace_viewid": " ", "url": "{{res.url}}", "res_id": "{{res.id}}", "docspace_token": "{{docspace_token}}"}
       {%endif%}
       $.ajax({
         type: "POST",
@@ -27,12 +27,12 @@
 
   {%if res.docspace_token %}
 <!--      <li class="btn btn-default">Has token {{res.docspace_token}}</li>-->
-      <li id="docspace" class="btn btn-default">DocSpace</li>
+      <li id="docspace" class="btn btn-default">Add to DocSpace</li>
   {%else%}
       <li class="btn btn-default">No Token</li>
   {%endif%}
   {%if res.docspace_viewid %}
-    <li class="btn btn-default">ViewID: {{res.docspace_viewid}}</li>
+    <li class="btn btn-default">Update in DocSpace - ViewID: {{res.docspace_viewid}}</li>
   {%endif%}
 
 {% if h.check_access('package_update', {'id':pkg.id }) and not is_activity_archive %}
