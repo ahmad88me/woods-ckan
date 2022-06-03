@@ -145,6 +145,7 @@ def add_update_docspace(context, data_dict):
     try:
         sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
         print("ABC ... ")
+        print(str(data_dict))
         if data_dict['docspace_viewid'].strip() == "":
             # create
             pass
