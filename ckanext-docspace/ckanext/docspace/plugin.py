@@ -9,7 +9,7 @@ import ckan
 from ckan.config.environment import CONFIG_FROM_ENV_VARS, config
 # import pandas as pd
 from multiprocessing import Process
-from ckan.lib.uploader import get_uploader
+from ckan.lib.uploader import get_resource_uploader
 from ckan.logic import get_action
 # BASE_URL = "https://woods.linkeddata.es/api/3/action/"
 # if 'docspace_api' in os.environ:
@@ -144,7 +144,8 @@ def f(context, data_dict):
     sss = SSSAPIS(token="bcc51260d15948ffb9346feee3d01358")
     print("To load the data")
     rsc = get_action(u'resource_show')(context, {u'id': data_dict['res_id']})
-    upload = get_uploader(rsc)
+    # rsc = {'id'}
+    upload = get_resource_uploader(rsc)
     filepath = upload.get_path(rsc[u'id'])
     print("file_path: %s" % filepath)
     table = table_to_content(filepath)
