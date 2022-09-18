@@ -26,4 +26,5 @@ sudo service redis restart
 
 
 
- 
+ # Funding
+ This work was funded partially by EIT Digital under the WOODS project.
